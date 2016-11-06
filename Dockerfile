@@ -24,6 +24,6 @@ RUN \
   mkdir -p project && \
   echo 'sbt.version='$SBT_VERSION > project/build.properties && \
   echo 'scalaVersion := "'$SCALA_VERSION'"' > build.sbt && \
-  sbt run
+  sbt
 
 WORKDIR /root
