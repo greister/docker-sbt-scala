@@ -1,9 +1,8 @@
 FROM java:8
 
-ENV SBT_VERSION 0.13.12
+ENV SBT_VERSION 0.13.13
 ENV SCALA_VERSION 2.11.8
-ENV COURSIER_VERSION 1.0.0-M14-3
-ENV SCOVERAGE_VERSION 1.4.0
+ENV COURSIER_VERSION 1.0.0-M14-7
 
 # scala
 RUN \
@@ -22,13 +21,9 @@ RUN \
 RUN \
   mkdir -p /root/.sbt/${SBT_VERSION%.*}/plugins && \
   echo 'addSbtPlugin("io.get-coursier" % "sbt-coursier" % "'$COURSIER_VERSION'")' >> /root/.sbt/${SBT_VERSION%.*}/plugins/plugins.sbt && \
-  echo 'addSbtPlugin("org.scoverage" % "sbt-scoverage" % "'$SCOVERAGE_VERSION'")' >> /root/.sbt/${SBT_VERSION%.*}/plugins/plugins.sbt && \
   mkdir -p project && \
   echo 'sbt.version='$SBT_VERSION > project/build.properties && \
   echo 'scalaVersion := "'$SCALA_VERSION'"' > build.sbt && \
-  echo 'object Test extends App { println("hello") }' > Test.scala && \
-  sbt run && \
-  rm -rf project build.sbt target Test.scala
+  sbt run
 
 WORKDIR /root
-
